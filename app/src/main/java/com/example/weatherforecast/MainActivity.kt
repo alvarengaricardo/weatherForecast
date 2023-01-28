@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        tvLatitude = findViewById(R.id.tvLatitude)
-        tvLongitude = findViewById(R.id.tvLongitude)
+       // tvLatitude = findViewById(R.id.tvLatitude)
+      //  tvLongitude = findViewById(R.id.tvLongitude)
         getCurrentLocation()
     }
 
@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Null", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-                        tvLatitude.text = "" + location.latitude
-                        tvLongitude.text = "" + location.longitude
+                       // tvLatitude.text =  "Latitude:  " + location.latitude
+                       // tvLongitude.text = "Longitude: " + location.longitude
                     }
                 }
             } else {
