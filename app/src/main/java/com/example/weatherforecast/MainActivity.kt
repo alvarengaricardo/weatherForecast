@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         getCurrentLocation()
     }
 
+    fun getWeather(lat: String: lon: String){
+
+    }
+
     private fun getCurrentLocation() {
 
         if (checkPermissions()) {
