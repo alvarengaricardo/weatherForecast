@@ -13,14 +13,17 @@ import android.provider.Settings
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.example.weatherforecast.api.Endpoint
+import com.example.weatherforecast.utils.NetworkUtils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.gson.JsonObject
+import retrofit2.Call
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var tvLatitude: TextView
-    private lateinit var tvLongitude: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,8 +35,26 @@ class MainActivity : AppCompatActivity() {
         getCurrentLocation()
     }
 
-    fun getWeather(lat: String: lon: String){
+    private fun getWeather(location: Location){
 
+        val retrofitClient = NetworkUtils.getRetrofitInstance("https://api.openweathermap.org/data/2.5/")
+        val endpoint = retrofitClient.create(Endpoint::class.java)
+
+        endpoint.getWeather(location.latitude.toString(), location.latitude.toString())
+            .enqueue(object :
+                retrofit2.Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    var data = mutableListOf<String>()
+                    response.body()?.keySet()?.iterator()?.forEach { data.add(it) }
+
+                   // println(data.count())
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    println("Erro Retrofit!")
+                }
+
+            })
     }
 
     private fun getCurrentLocation() {
@@ -57,8 +78,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Null", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-                       // tvLatitude.text =  "Latitude:  " + location.latitude
-                       // tvLongitude.text = "Longitude: " + location.longitude
+                        getWeather(location)
                     }
                 }
             } else {

@@ -7,6 +7,6 @@ import retrofit2.http.Path
 
 interface Endpoint {
 
-    @GET("/weather?lat={latitude}&lon={longitude}&appid=f45d602e36fc46d843ea8acebb5917f5&units=metric&lang=pt_br")
-    fun getWeather(@Path(value = "latitude", encoded = true) from : String, @Path(value = "longitude", encoded = true) to : String) : Call<JsonObject>
+    @GET("weather?lat={latitude}&lon={longitude}&appid=f45d602e36fc46d843ea8acebb5917f5&units=metric&lang=pt_br")
+    fun getWeather(@Path(value = "latitude", encoded = true) latitude : String, @Path(value = "longitude", encoded = true) longitude : String) : Call<JsonObject>
 }
